@@ -1,82 +1,69 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Minha Localização',
-      home: HomeScreen(),
-    );
-  }
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
-  String locationMessage = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _requestLocationPermission(); // Solicita a permissão ao iniciar o app
-  }
-
-  Future<void> _requestLocationPermission() async {
-    // Solicita a permissão de localização
-    var status = await Permission.location.request();
-
-    if (status.isGranted) {
-      // Permissão concedida, pode acessar a localização
-      print('Permissão concedida');
-    } else if (status.isDenied) {
-      // Permissão negada pelo usuário
-      print('Permissão negada');
-    } else if (status.isPermanentlyDenied) {
-      // Permissão permanentemente negada, o usuário precisa alterar isso nas configurações do sistema
-      print('Permissão permanentemente negada');
-      openAppSettings();
-    }
-  }
-
-  void _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      locationMessage =
-          'Latitude: ${position.latitude}, Longitude: ${position.longitude}';
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Minha Localização'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(locationMessage),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _getCurrentLocation,
-              child: const Text('Obter Localização Atual'),
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Flutter Layout'),
+        ),
+        body: Center(
+          child: Container(
+            padding: EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                buildButtonColumn(Icons.call, 'CALL'),
+                buildButtonColumn(Icons.near_me, 'ROUTE'),
+                buildButtonColumn(Icons.share, 'SHARE'),
+              ],
             ),
-          ],
+          ),
         ),
       ),
+    );
+  }
+
+
+
+  Widget buildButtonColumn(IconData icon, String label) {
+    // ignore: prefer_const_constructors
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      // ignore: prefer_const_literals_to_create_immutables
+      children: [
+        /* 
+        -PRÁTICA DE LAYOUTS-
+
+        Utilize do diagrama de árvores, protótipo disponibilizado e do que 
+        já aprendeu até então sobre Widgets para replicar a NavBar no seu app!
+
+
+        LEMBRE-SE :
+        -> O Widget Container() é do tipo filho único, deve ser criado passando apenas um Widget...
+        Container(child: AlgumWidget)
+
+        -> Enquanto isso Column() aceita múltiplos filhos, e deve ser criado passando uma lista de Widgets
+         Column(children : [AlgumWidget, OutroWidget, ...])
+
+
+        VAI ALGUMAS DICAS :
+        -> Para estilizar Widgets do tipo Text(), pode criar-lo da seguinte maneira
+        Text(
+          label,
+          style: const TextStyle(
+              SEUS ESTILOS AQUI
+            ),
+          )
+        -> Pode consultar o papai ChatGPT
+        */
+      ],
     );
   }
 }
