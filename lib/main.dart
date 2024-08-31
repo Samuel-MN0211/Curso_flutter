@@ -41,17 +41,13 @@ class MyApp extends StatelessWidget {
         /* 
         -PRÁTICA DE LAYOUTS-
 
-        Utilize do diagrama de árvores, protótipo disponibilizado e do que 
-        já aprendeu até então sobre Widgets para replicar a NavBar no seu app!
+        Com o diagrama o que já aprendeu até então sobre Widgets tente replicar a NavBar no seu app!
 
+        1. Crie um Widget Container() para armazenar o Icon() sendo passado como parâmetro
+        Lembre-se de estilizar a cor dele
 
-        LEMBRE-SE :
-        -> O Widget Container() é Single-Child, deve ser criado passando apenas um Widget...
-        Container(child: AlgumWidget)
-
-        -> Enquanto isso Column() é Multi-Child, e deve ser criado passando uma lista de Widgets
-         Column(children : [AlgumWidget, OutroWidget, ...])
-
+        2. Crie um Widget Text() para exibir a label passada como parâmetro
+        Lembre-se também de estilizar a cor do texto
 
         VAI ALGUMAS DICAS :
         -> Para estilizar Widgets do tipo Icons(), pode criar-lo da seguinte maneira
@@ -64,7 +60,7 @@ class MyApp extends StatelessWidget {
               SEUS ESTILOS AQUI
             ),
           )
-          
+
         -> Pode consultar o papai ChatGPT
         */
       ],
