@@ -46,16 +46,17 @@ class MyApp extends StatelessWidget {
 
 
         LEMBRE-SE :
-        -> O Widget Container() é do tipo filho único, deve ser criado passando apenas um Widget...
+        -> O Widget Container() é Single-Child, deve ser criado passando apenas um Widget...
         Container(child: AlgumWidget)
 
-        -> Enquanto isso Column() aceita múltiplos filhos, e deve ser criado passando uma lista de Widgets
+        -> Enquanto isso Column() é Multi-Child, e deve ser criado passando uma lista de Widgets
          Column(children : [AlgumWidget, OutroWidget, ...])
 
 
         VAI ALGUMAS DICAS :
         -> Para estilizar Widgets do tipo Icons(), pode criar-lo da seguinte maneira
         Icon(icon, color: SUACOR)
+
         -> Para estilizar Widgets do tipo Text(), pode criar-lo da seguinte maneira
         Text(
           label,
@@ -63,6 +64,7 @@ class MyApp extends StatelessWidget {
               SEUS ESTILOS AQUI
             ),
           )
+          
         -> Pode consultar o papai ChatGPT
         */
       ],
