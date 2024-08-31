@@ -54,6 +54,8 @@ class MyApp extends StatelessWidget {
 
 
         VAI ALGUMAS DICAS :
+        -> Para estilizar Widgets do tipo Icons(), pode criar-lo da seguinte maneira
+        Icon(icon, color: SUACOR)
         -> Para estilizar Widgets do tipo Text(), pode criar-lo da seguinte maneira
         Text(
           label,
