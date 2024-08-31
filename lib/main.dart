@@ -4,6 +4,8 @@ void main() {
   runApp(MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -41,7 +43,7 @@ class MyApp extends StatelessWidget {
         /* 
         -PRÁTICA DE LAYOUTS-
 
-        Com o diagrama o que já aprendeu até então sobre Widgets tente replicar a NavBar no seu app!
+        Usando o que já aprendeu até então sobre Widgets tente replicar a NavBar no seu app!
 
         1. Crie um Widget Container() para armazenar o Icon() sendo passado como parâmetro
         Lembre-se de estilizar a cor dele
