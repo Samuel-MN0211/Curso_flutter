@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'list_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,9 +10,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'Minha Localização',
-      home: HomeScreen(),
+    return MaterialApp(
+      title: 'Formulário de Informações',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      home: const HomeScreen(),
+      routes: {
+        '/listScreen': (context) => ListScreen(
+              data: ModalRoute.of(context)?.settings.arguments
+                  as List<Map<String, String>>?,
+            ),
+      },
     );
   }
 }
@@ -24,55 +34,79 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String locationMessage = '';
+  final _nameController = TextEditingController();
+  final _ageController = TextEditingController();
+  final _creController = TextEditingController();
+  final List<Map<String, String>> _data = [];
 
-  @override
-  void initState() {
-    super.initState();
-    _requestLocationPermission(); // Solicita a permissão ao iniciar o app
-  }
+  void _storeData() {
+    final name = _nameController.text;
+    final age = _ageController.text;
+    final cre = _creController.text;
 
-  Future<void> _requestLocationPermission() async {
-    // Solicita a permissão de localização
-    var status = await Permission.location.request();
-
-    if (status.isGranted) {
-      // Permissão concedida, pode acessar a localização
-      print('Permissão concedida');
-    } else if (status.isDenied) {
-      // Permissão negada pelo usuário
-      print('Permissão negada');
-    } else if (status.isPermanentlyDenied) {
-      // Permissão permanentemente negada, o usuário precisa alterar isso nas configurações do sistema
-      print('Permissão permanentemente negada');
-      openAppSettings();
+    if (name.isEmpty || age.isEmpty || cre.isEmpty) {
+      // Show a snackbar or alert if fields are empty
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Por favor, preencha todos os campos.')),
+      );
+      return;
     }
+
+    setState(() {
+      _data.add({
+        'name': name,
+        'age': age,
+        'cre': cre,
+      });
+
+      // Clear the text fields
+      _nameController.clear();
+      _ageController.clear();
+      _creController.clear();
+    });
   }
 
-  void _getCurrentLocation() async {
-    Position position = await Geolocator.getCurrentPosition(
-        desiredAccuracy: LocationAccuracy.high);
-    setState(() {
-      locationMessage =
-          'Latitude: ${position.latitude}, Longitude: ${position.longitude}';
-    });
+  void _navigateToListScreen() {
+    Navigator.pushNamed(
+      context,
+      '/listScreen',
+      arguments: _data,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Minha Localização'),
+        title: const Text('Tela Principal'),
       ),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            Text(locationMessage),
+            TextField(
+              controller: _nameController,
+              decoration: const InputDecoration(labelText: 'Nome'),
+            ),
+            TextField(
+              controller: _ageController,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Idade'),
+            ),
+            TextField(
+              controller: _creController,
+              decoration: const InputDecoration(labelText: 'CRE'),
+            ),
             const SizedBox(height: 20),
             ElevatedButton(
-              onPressed: _getCurrentLocation,
-              child: const Text('Obter Localização Atual'),
+              onPressed: _storeData,
+              child: const Text('Armazenar'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _navigateToListScreen,
+              child: const Text('Enviar'),
             ),
           ],
         ),
